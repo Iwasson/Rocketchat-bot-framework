@@ -39,20 +39,26 @@ const processMessages = async(err, message, messageOptions) => {
     
     if(!message.unread) { return; }                              //checks the unread flag on the message, a message will be reacted to twice, once upon receiving, and once upon reading.
     
-    if (!err && (!MUSTBEMENTIONED || mentioned)) {               //there must be no errors, and the bot has to either be mentioned or mentioning must be off
+    if (!err && (MUSTBEMENTIONED || mentioned)) {                //there must be no errors, and the bot has to either be mentioned or mentioning must be off
         if (message.u._id === myUserId) return;                  //Ignores any messages sent by the bot
         const roomname = await driver.getRoomName(message.rid);  //gets the name of room the message was sent from
         console.log('got message: ' + message.msg)               //ouput the message contents for debugging 
 
-        return await reply(message.msg, roomname, author);       //this function is called to deal with replies
+        //return await reply(message.msg, roomname, author);       //this function is called to deal with replies
+
+        messageObj = {
+            'message': message.msg,
+            'room' : roomname,
+            'author' : author
+        }
+        return reply(messageObj);
     }
 }
 
-
 //This will determine how a message is replied to
-async function reply(message, roomid, author) {
-    let command = message.split(DELIMITER);                     //break the incoming message into parts, using the DELIMITER
-    console.log("Author: " + author);                           //output who was the author of the incoming message
+async function reply(messageObj) {
+    let command = messageObj.message.split(DELIMITER);                     //break the incoming message into parts, using the DELIMITER
+    console.log("Author: " + messageObj.author);                           //output who was the author of the incoming message
 
     
 }
