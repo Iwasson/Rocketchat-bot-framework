@@ -1,0 +1,21 @@
+{
+  "name": "rocketchat-node-framework",
+  "version": "1.0.0",
+  "description": "A bot framework in Node for Rocketchat",
+  "main": "botbrain.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iwasson/Rocketchat-bot-framework.git"
+  },
+  "author": "Ian Wasson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Iwasson/Rocketchat-bot-framework/issues"
+  },
+  "homepage": "https://github.com/Iwasson/Rocketchat-bot-framework#readme"
+}
