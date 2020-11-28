@@ -18,16 +18,21 @@ const runbot = async ({HOST, USER, PASS, SSL, ROOMS, MUSTBEMENTIONED, onMessage}
 
 const messageBuilder = (onMessage, USER, MUSTBEMENTIONED) => {
     return async(err, message, messageOptions) => {
-        if(Array.isArray(message)) { message = message[0]; }         //rocketchat 3.8 now sends replies as an array, this will allow for backwards compatability 
+        if(Array.isArray(message)) { message = message[0]; }             //rocketchat 3.8 now sends replies as an array, this will allow for backwards compatability 
     
-        let mentioned = false;                                       //this flag will let us know if the message mentioned the bot
-        if(message.mentions.includes(USER)) { mentioned = true; }    //will set the flag to true if the bot was mentioned, leaves it false if not
+        let mentioned = false;                                          //this flag will let us know if the message mentioned the bot
+        message.mentions.forEach(mention => {
+            if(mention.username.includes(USER)) { mentioned = true; }   //will set the flag to true if the bot was mentioned, leaves it false if not
+        });                                       
+        
     
         let author = message.u.username;                             //gives us the author of the incoming message
         
         if(!message.unread) { return; }                              //checks the unread flag on the message, a message will be reacted to twice, once upon receiving, and once upon reading.
         
-        if (!err && (MUSTBEMENTIONED || mentioned)) {                //there must be no errors, and the bot has to either be mentioned or mentioning must be off
+        //console.log(message.mentions);
+
+        if (!err && ((MUSTBEMENTIONED && mentioned) || !MUSTBEMENTIONED)) {                //there must be no errors, and the bot has to either be mentioned or mentioning must be off
             if (message.u._id === myUserId) return;                  //Ignores any messages sent by the bot
             const roomname = await driver.getRoomName(message.rid);  //gets the name of room the message was sent from
             console.log('got message: ' + message.msg)               //ouput the message contents for debugging 
