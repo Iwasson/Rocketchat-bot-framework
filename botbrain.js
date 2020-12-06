@@ -24,29 +24,32 @@ const messageBuilder = (onMessage, USER, MUSTBEMENTIONED) => {
         message.mentions.forEach(mention => {
             if(mention.username.includes(USER)) { mentioned = true; }   //will set the flag to true if the bot was mentioned, leaves it false if not
         });                                       
-        
     
         let author = message.u.username;                             //gives us the author of the incoming message
-        
         if(!message.unread) { return; }                              //checks the unread flag on the message, a message will be reacted to twice, once upon receiving, and once upon reading.
         
         //console.log(message.mentions);
-
         if (!err && ((MUSTBEMENTIONED && mentioned) || !MUSTBEMENTIONED)) {                //there must be no errors, and the bot has to either be mentioned or mentioning must be off
             if (message.u._id === myUserId) return;                  //Ignores any messages sent by the bot
             const roomname = await driver.getRoomName(message.rid);  //gets the name of room the message was sent from
             console.log('got message: ' + message.msg)               //ouput the message contents for debugging 
     
-            //return await reply(message.msg, roomname, author);       //this function is called to deal with replies
-    
             messageObj = {
                 'message': message.msg,
                 'room' : roomname,
+                'roomid' : message.rid,
                 'author' : author
             }
-            onMessage(messageObj);
+            onMessage(messageObj, replyTo);
         }
     }
 }
+
+
+const replyTo = async (messageObj, msg) => {
+    let message = await driver.prepareMessage(msg, messageObj.roomid);
+    //message.alias = userName;
+    const sent = await driver.sendMessage(message);
+  }
 
 module.exports.runbot = runbot;
