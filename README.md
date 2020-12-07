@@ -13,12 +13,12 @@ This library is for constructing basic RocketChat bots using NodeJS. Only bare m
 ## Usage
 Install and save with [npm](https://www.npmjs.com/):
 ```
-$ npm i rocketchat-bot-framework --save
+$ npm i rocketchat-node-framework --save
 ```
 
 ## Example usage
 ```
-const bot = require("rocketchat-bot-framework")
+const bot = require("rocketchat-node-framework")
 
 bot.runbot({
     HOST: 'rocketchat.server',  //server url for rocket
