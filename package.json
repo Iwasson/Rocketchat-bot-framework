@@ -1,9 +1,12 @@
 {
   "name": "rocketchat-node-framework",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "A bot framework in Node for Rocketchat",
   "main": "./botbrain.js",
-  "files": ["botbrain.js", "package.json"],
+  "files": [
+    "botbrain.js",
+    "package.json"
+  ],
   "dependencies": {
     "@rocket.chat/sdk": "^0.2.9-2"
   },
