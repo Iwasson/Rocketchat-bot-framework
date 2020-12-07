@@ -36,6 +36,8 @@ const messageBuilder = (onMessage, USER, MUSTBEMENTIONED) => {
     
             messageObj = {
                 'message': message.msg,
+                'messageId' : message._id,
+                'time' : message.ts,
                 'room' : roomname,
                 'roomid' : message.rid,
                 'author' : author
@@ -45,11 +47,42 @@ const messageBuilder = (onMessage, USER, MUSTBEMENTIONED) => {
     }
 }
 
+/* Options object expected fields:
+Alias:  Who we are sending the message as, good for bridging
+Room:   Where to send the message to
+Dm:     Send a direct message
+*/
+const replyTo = async (messageObj, msg, options) => {
+    if(!msg || !messageObj) {return false;}
 
-const replyTo = async (messageObj, msg) => {
-    let message = await driver.prepareMessage(msg, messageObj.roomid);
-    //message.alias = userName;
-    const sent = await driver.sendMessage(message);
+    let message = await driver.prepareMessage(msg, messageObj.roomid); //defaults to setting the roomid to where the message came from
+    
+    //based upon which variables are set, decide what kind of reply should take place
+    //if no options are specified, then reply to where message originated 
+    if(!options) {
+        console.log(message);
+        const sent = await driver.sendMessage(message);
+        return true;
+    }
+    //otherwise parse the options variable
+    else {
+        //if we have an alias specified
+        if(options.Alias) {
+            message.alias = options.Alias;
+        }
+        //if we specify which room to send a message too
+        if(options.Room) {
+            let rid = await driver.getRoomId(options.Room);
+            message.rid = rid;
+        }
+        //if we want to send a direct message to a user
+        //note that Dm overrides Room
+        if(options.Dm) {
+            const sent = await driver.sendDirectToUser(message, options.Dm);
+            return true;
+        }
+        const sent = await driver.sendMessage(message);
+    }
   }
 
 module.exports.runbot = runbot;
