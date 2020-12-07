@@ -1,22 +1,22 @@
-#RocketChat Bot Framework for Node
+# RocketChat Bot Framework for Node
 A Basic NodeJS RocketChat Bot Framework
 
-##About
+## About
 This library is for constructing basic RocketChat bots using NodeJS. Only bare minimum functionality is included.
 
-##Features
+## Features
 * Recieve messages and parse message objects 
 * Send replies to messages
 * Send messages to specific rooms
 * Send messages to a specific user
 
-##Usage
+## Usage
 Install and save with [npm](https://www.npmjs.com/):
 ```
 $ npm i rocketchat-bot-framework --save
 ```
 
-##Example usage
+## Example usage
 ```
 const bot = require("rocketchat-bot-framework")
 
