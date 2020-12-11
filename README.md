@@ -51,8 +51,8 @@ messageObj: {
 message: "Some string here"
 
 options: {
-    Alias:  'username'  Who we are sending the message as, good for bridging
-    Room:   'testRoom'  Where to send the message to, defaults to where message was recieved from if not set
-    Dm:     'testUser'  pass in username, overrides Room and sends a message to user
+    alias:  'username'  Who we are sending the message as, good for bridging
+    room:   'testRoom'  Where to send the message to, defaults to where message was recieved from if not set
+    dm:     'testUser'  pass in username, overrides Room and sends a message to user
 }
 ```

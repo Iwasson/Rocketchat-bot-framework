@@ -67,18 +67,18 @@ const replyTo = async (messageObj, msg, options) => {
     //otherwise parse the options variable
     else {
         //if we have an alias specified
-        if(options.Alias) {
-            message.alias = options.Alias;
+        if(options.alias) {
+            message.alias = options.alias;
         }
         //if we specify which room to send a message too
-        if(options.Room) {
-            let rid = await driver.getRoomId(options.Room);
+        if(options.room) {
+            let rid = await driver.getRoomId(options.room);
             message.rid = rid;
         }
         //if we want to send a direct message to a user
         //note that Dm overrides Room
-        if(options.Dm) {
-            const sent = await driver.sendDirectToUser(message, options.Dm);
+        if(options.dm) {
+            const sent = await driver.sendDirectToUser(message, options.dm);
             return true;
         }
         const sent = await driver.sendMessage(message);
