@@ -1,6 +1,6 @@
 {
   "name": "rocketchat-node-framework",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A bot framework in Node for Rocketchat",
   "main": "./botbrain.js",
   "files": [
